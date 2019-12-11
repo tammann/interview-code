@@ -25,7 +25,7 @@ public strictfp class OrderedTimestamps {
     private int number;
 
     synchronized public final void setNumber(int number) {
-        this.number = number; // setting the number
+           this.number = number; // setting the number
     }
 
     final public int getNumber() {
@@ -37,7 +37,7 @@ public strictfp class OrderedTimestamps {
     }
 
     public int getHashMap() {
-        return this.number;
+     return this.number;
     }
 
     OrderedTimestamps() {
@@ -54,9 +54,12 @@ public strictfp class OrderedTimestamps {
     public void mark(String mark) {
         this.hashMap.put(Calendar.getInstance().getTime(), mark);
         this.number++;
+
+
     }
 
     public void mark() {
+
         this.hashMap.put(Calendar.getInstance().getTime(), String.valueOf(this.getNumber()));
         this.number++;
     }
@@ -72,10 +75,11 @@ public strictfp class OrderedTimestamps {
             if ( i == 0 ) {
                 result = "";
             }
+
             result += "Mark " + this.hashMap.get(dates.get(i)) + " at " + dates.get(i);
             if (i < dates.size() - 1) {
                 result += "\n";
-                continue;
+                continue loop;
             } else {
                 // newline
             }
@@ -90,5 +94,7 @@ public strictfp class OrderedTimestamps {
             .sorted()
             .findFirst()
             .get();
-    }
+
+        
+}
 }

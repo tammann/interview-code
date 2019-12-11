@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import jdk.jshell.spi.ExecutionControl;
 
 /**
  * This class is thread safe.
@@ -15,6 +16,12 @@ public class ParserImpl implements Parser {
     public synchronized void setFile(File f) {
         file = f;
     }
+
+    /**
+     * This returns the file
+     *
+     * @return File
+     */
     public synchronized File getFile() {
         return file;
     }
@@ -42,6 +49,9 @@ public class ParserImpl implements Parser {
         return output;
     }
 
+    /**
+     * @return String
+     */
     @Override
     public String getMoreContent() {
         return null;
@@ -52,6 +62,9 @@ public class ParserImpl implements Parser {
         return null;
     }
 
+    /**
+     * @return String the old content
+     */
     @Override
     public String setContent() {
         return null;
@@ -59,7 +72,7 @@ public class ParserImpl implements Parser {
 
     @Override
     public Object assertConsistency() {
-        return null;
+        throw new IllegalStateException("not yet implemented");
     }
 
     public void saveContent(String content) throws Throwable {
