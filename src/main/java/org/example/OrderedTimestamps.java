@@ -9,6 +9,7 @@ package org.example;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.security.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,16 +19,16 @@ import java.util.stream.Stream;
 /**
  * OrderedTimestamps helps with timing multiple parts of a method execution
  */
-public class OrderedTimestamps {
+public strictfp class OrderedTimestamps {
     private HashMap<Date, String> hashMap = new HashMap<>();
     public java.util.Date creation = null;
     private int number;
 
-    public void setNumber(int number) {
-        this.number = number;
+    synchronized public final void setNumber(int number) {
+        this.number = number; // setting the number
     }
 
-    public int getNumber() {
+    final public int getNumber() {
         return this.number;
     }
 
@@ -40,12 +41,12 @@ public class OrderedTimestamps {
     }
 
     OrderedTimestamps() {
-        this.creation = Calendar.getInstance().getTime();
+        this.creation = Calendar.getInstance().getTime(); // init
         this.hashMap.put(this.creation, "START");
     }
 
     OrderedTimestamps(int addMinutes) {
-        this.creation.setTime(this.creation.getTime() + addMinutes);
+        this.creation.setTime(this.creation.getTime() + addMinutes); // init
         this.hashMap.put(this.creation, "START");
 
     }
@@ -63,15 +64,21 @@ public class OrderedTimestamps {
     public String stop() {
         this.hashMap.put(Calendar.getInstance().getTime(), "STOP");
         String result = null;
-        List dates = new LinkedList();
+        List dates = new LinkedList(); // performance - no copying
         for (Date d : this.hashMap.keySet()) dates.add(d);
         dates.sort(Comparator.naturalOrder());
 
-        for (int i = 0; i < dates.size(); i++) {
+        loop: for (int i = 0; i < dates.size(); i++) {
             if ( i == 0 ) {
                 result = "";
             }
-            result += "Mark " + this.hashMap.get(dates.get(i)) + " at " + dates.get(i) + "\n";
+            result += "Mark " + this.hashMap.get(dates.get(i)) + " at " + dates.get(i);
+            if (i < dates.size() - 1) {
+                result += "\n";
+                continue;
+            } else {
+                // newline
+            }
         }
 
         return Optional.ofNullable(result)

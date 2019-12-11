@@ -8,6 +8,7 @@ package org.example;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This is the entry point of the application.
@@ -27,9 +28,10 @@ public final class Main {
     @SuppressWarnings("ProhibitPublicStaticMethods")
     public static void main(final String[] args) {
         final OrderedTimestamps ots = new OrderedTimestamps();
-        System.err.println("Hi, welcome to the challenge....");
+        if (LoggingBetterParsr.isDebug())
+            LoggingBetterParsr.info("Hi, welcome to the challenge....".getBytes(StandardCharsets.UTF_8));
         ots.mark("after welcome");
-        final ParserImpl first = new BetterParsr();
+        final ParserImpl first = new LoggingBetterParsr();
         first.setFile(new File("LICENSE.txt"));
         final Parser second = first;
         String data = null;
@@ -40,7 +42,12 @@ public final class Main {
             exception.printStackTrace();
         }
         ots.mark("before result");
-        System.err.println(String.format("Read %d characters.", data.length()));
+        String string;
+        if (LoggingBetterParsr.isDebug()) {
+            string = String.format("Read %d characters.", data.length());
+            LoggingBetterParsr.info(string.getBytes());
+        }
+        // logging:
         System.err.println(ots.stop());
     }
 }

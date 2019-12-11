@@ -46,4 +46,12 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.5.2</version>
+        </dependency>
+    </dependencies>
+
 </project>

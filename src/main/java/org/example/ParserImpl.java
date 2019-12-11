@@ -41,6 +41,27 @@ public class ParserImpl implements Parser {
         }
         return output;
     }
+
+    @Override
+    public String getMoreContent() {
+        return null;
+    }
+
+    @Override
+    public String isContentCorrect() {
+        return null;
+    }
+
+    @Override
+    public String setContent() {
+        return null;
+    }
+
+    @Override
+    public Object assertConsistency() {
+        return null;
+    }
+
     public void saveContent(String content) throws Throwable {
         FileOutputStream o = new FileOutputStream(file);
         try {
