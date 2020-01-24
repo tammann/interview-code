@@ -3,11 +3,13 @@ steps:
 - name: build
   image: maven:3.6.3-jdk-14
   commands:
-  - mvn build
+  - mvn install
   - mvn qulice:check
 
 services:
 - name: database
   image: mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: password
   ports:
   - 3306
