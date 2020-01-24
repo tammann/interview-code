@@ -1,0 +1,13 @@
+kind: pipeline
+steps:
+- name: build
+  image: maven:3.6.3-jdk-14
+  commands:
+  - mvn build
+  - mvn qulice:check
+
+services:
+- name: database
+  image: mysql
+  ports:
+  - 3306
